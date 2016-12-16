@@ -21,7 +21,7 @@ addons:
     project:
       name: "gburca/RocksoftCRC"
       description: "Build submitted via Travis CI"
-    notification_email: gburca-github@ebixio.com
+    notification_email: gburca-coverity@ebixio.com
     build_command_prepend: "make clean"
     build_command: "make"
     branch_pattern: coverity_scan
