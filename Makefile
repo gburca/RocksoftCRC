@@ -1,7 +1,7 @@
 .DEFAULT_GOAL = all
-.PHONY: all clean
+.PHONY: all clean test
 
-all: crctable
+all: test
 
 ROCKSOFT_SRC = $(wildcard Rocksoft/*.c)
 ROCKSOFT_INC = $(wildcard Rocksoft/*.h)
@@ -9,8 +9,16 @@ ROCKSOFT_INC = $(wildcard Rocksoft/*.h)
 crctable: $(ROCKSOFT_SRC) $(ROCKSOFT_INC)
 	gcc $(ROCKSOFT_SRC) -o $@
 
+crc-32: crc-32.c crctable
+	./crctable
+	gcc $< -o $@
+
+test: crc-32 test.expected
+	./crc-32 "123456789" > test.out
+	diff -q test.out test.expected
+
 clean:
-	rm -rf crctable
+	rm -rf crctable crctable.out crc-32 test.out
 
 # Debug target to see what all the variables are set to
 # make printvars-all > printvars.txt 2>&1
